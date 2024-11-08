@@ -1,18 +1,13 @@
 "use client"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
-import { ArrowUpDown } from "lucide-react"
+import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { z } from "zod";
+import { useRouter } from "next/navigation"
+import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { toast } from "sonner"
+import { deleteHorarioAction } from "../actions"
 
 export const Horario = z.object({
     id: z.number(),
@@ -48,59 +43,42 @@ export const columns: ColumnDef<typeof Horario>[] = [
     },
     {
         accessorKey: "dia_semana",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    dia_semana
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        header: "Dia de la Semana",
     },
     {
         accessorKey: "hora_inicio",
-        header: "hora_inicio",
+        header: "Hora Inicio",
     },
     {
         accessorKey: "hora_fin",
-        header: "hora_fin",
+        header: "Hora Fin",
     },
     {
         accessorKey: "cupo_maximo",
-        header: "cupo_maximo",
+        header: "Cupo Máximo",
     },
     {
         accessorKey: "cantidad_inscriptos",
-        header: "cantidad_inscriptos",
+        header: "Cantidad de Inscriptos",
     },
     {
         id: "actions",
         cell: ({ row }) => {
-            const horario = row.original
-
+            const h = row.original as any
+            const router = useRouter()
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
+                <div className="flex gap-2">
+                    <Button onClick={() => router.push(`/horarios/${h.id}`)} variant="outline" size="icon" color="green-600">
+                        <PencilIcon />
+                    </Button>
+                    <ConfirmDialog onConfirm={() => {
+                        deleteHorarioAction(h.id)
+                    }} >
+                        <Button variant="destructive" size="icon" >
+                            <TrashIcon />
                         </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(horario.parse(horario).id.toString())}
-                        >
-                            Copiar Id de pago
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Ver Alumne</DropdownMenuItem>
-                        <DropdownMenuItem>Ver detalles</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                    </ConfirmDialog>
+                </div >
             )
         },
     },

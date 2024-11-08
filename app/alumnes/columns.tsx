@@ -80,11 +80,9 @@ export const columns: ColumnDef<typeof Alumno>[] = [
             const router = useRouter()
             return (
                 <div className="flex gap-2">
-                    {/* <Link href={`/alumnes/${alumno.id}`}> */}
                     <Button onClick={() => router.push('/alumnes/1')} variant="outline" size="icon" color="green-600">
                         <PencilIcon />
                     </Button>
-                    {/* </Link> */}
                     <Button variant="destructive" size="icon">
                         <TrashIcon />
                     </Button>

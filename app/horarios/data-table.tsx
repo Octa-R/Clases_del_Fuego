@@ -43,10 +43,7 @@ export function DataTable<TData, TValue>({
         React.useState<VisibilityState>({})
     // sorting
     const [sorting, setSorting] = React.useState<SortingState>([])
-    // column filters
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
+
     // row selection
     const [rowSelection, setRowSelection] = React.useState({})
     const table = useReactTable({
@@ -56,13 +53,11 @@ export function DataTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
-        onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         state: {
             sorting,
-            columnFilters,
             columnVisibility,
             rowSelection,
         },
@@ -71,14 +66,6 @@ export function DataTable<TData, TValue>({
     return (
         <div>
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter cantidad"
-                    value={(table.getColumn("cantidad_inscriptos")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("cantidad_inscriptos")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">

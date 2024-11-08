@@ -47,6 +47,14 @@ export const columns: ColumnDef<Pago>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: "fecha_pago",
+        header: "Fecha de Pago",
+        cell: ({row}) => {
+            const fecha = new Date(row.original.fecha_pago).toLocaleDateString("es-Ar")
+            return fecha
+        }
+    },
+    {
         accessorKey: "metodo_pago",
         header: ({ column }) => {
             return (
@@ -59,10 +67,6 @@ export const columns: ColumnDef<Pago>[] = [
                 </Button>
             )
         },
-    },
-    {
-        accessorKey: "fecha_pago",
-        header: "Fecha de Pago",
     },
     {
         accessorKey: "alumnes.nombre",
