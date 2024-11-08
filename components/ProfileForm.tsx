@@ -63,9 +63,6 @@ export function ProfileForm({ profile }: { profile: any }) {
                             <FormControl>
                                 <Input {...field} value={profile.email} />
                             </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -75,13 +72,10 @@ export function ProfileForm({ profile }: { profile: any }) {
                     name="nombre"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Nombre</FormLabel>
                             <FormControl>
                                 <Input placeholder="shadcn" {...field} value={profile.nombre} />
                             </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -91,13 +85,10 @@ export function ProfileForm({ profile }: { profile: any }) {
                     name="apellido"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Apellido</FormLabel>
                             <FormControl>
                                 <Input placeholder="shadcn" {...field} value={profile.apellido} />
                             </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -140,9 +131,6 @@ export function ProfileForm({ profile }: { profile: any }) {
                                     />
                                 </PopoverContent>
                             </Popover>
-                            <FormDescription>
-                                Your date of birth is used to calculate your age.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
