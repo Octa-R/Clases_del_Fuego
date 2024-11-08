@@ -4,7 +4,9 @@ import { createClient } from '@/utils/supabase/server';
 
 async function getData(): Promise<typeof Horario[]> {
     const supabase = await createClient();
-    const { data: pagos, error } = await supabase.from("HORARIOS").select('*').order("dia_semana", { ascending: true })
+    const { data: pagos, error } = await supabase.from("horarios")
+    .select('*')
+    .order("dia_semana", { ascending: true })
     return pagos ?? []
 }
 

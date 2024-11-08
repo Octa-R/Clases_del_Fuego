@@ -12,18 +12,18 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Pago = {
-    id: string
-    monto: number
-    fecha_pago: string
-    metodo_pago: string
-    id_alumne: number
-    id_horario: number
-}
+import { z } from "zod";
 
-export const columns: ColumnDef<Pago>[] = [
+export const Alumno = z.object({
+    id: z.number(),
+    nombre: z.string(),
+    apellido: z.string(),
+    email: z.string(),
+    fecha_nacimiento: z.string(),
+    observaciones: z.string(),
+});
+
+export const columns: ColumnDef<typeof Alumno>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -47,56 +47,45 @@ export const columns: ColumnDef<Pago>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: "metodo_pago",
+        accessorKey: "nombre",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Metodo
+                    nombre
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
     },
     {
-        accessorKey: "fecha_pago",
-        header: "Fecha de Pago",
-    },
-    {
-        accessorKey: "alumnes.nombre",
-        header: "Nombre",
-    },
-    {
-        accessorKey: "alumnes.apellido",
-        header: "Apellido",
-    },
-    {
-        accessorKey: "horarios.dia_semana",
-        header: "Dia",
-    },
-    {
-        accessorKey: "horarios.hora_inicio",
-        header: "Hora",
-    },
-    {
-        accessorKey: "monto",
-        header: () => <div className="text-right">Amount</div>,
-        cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("monto"))
-            const formatted = new Intl.NumberFormat("es-AR", {
-                style: "currency",
-                currency: "ARS",
-            }).format(amount)
-
-            return <div className="text-right font-medium">{formatted}</div>
+        accessorKey: "apellido",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    apellido
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
         },
+    },
+    {
+        accessorKey: "observaciones",
+        header: "observaciones",
+    },
+    {
+        accessorKey: "inscripciones.activo",
+        header: "Activo",
     },
     {
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const horario = row.original
 
             return (
                 <DropdownMenu>
@@ -109,9 +98,9 @@ export const columns: ColumnDef<Pago>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
+                            onClick={() => navigator.clipboard.writeText(horario.parse(horario).id.toString())}
                         >
-                            Copiar Id de pago
+                            Copiar Id
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Ver Alumne</DropdownMenuItem>
