@@ -8,7 +8,9 @@ async function getData(): Promise<typeof Horario[]> {
     const supabase = await createClient();
     const { data: pagos, error } = await supabase.from("horarios")
         .select('*')
+        .filter('activo', 'eq', true)
         .order("dia_semana", { ascending: true })
+        .order("hora_inicio", { ascending: true });
     return pagos ?? []
 }
 

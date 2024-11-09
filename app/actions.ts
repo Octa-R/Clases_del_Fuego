@@ -131,20 +131,33 @@ export const signOutAction = async () => {
 
 export const createHorarioAction = async (nuevoHorarioData: any) => {
     const supabase = await createClient();
+
+    const { data: horarios, error: errorHorarios } = await supabase.from("horarios")
+    .select("*")
+    .eq("dia_semana", nuevoHorarioData.dia)
+    .gt("hora_fin", nuevoHorarioData.hora_inicio)
+    .lt("hora_inicio", nuevoHorarioData.hora_fin);
+
+    if(horarios!.length > 0) {
+        return encodedRedirect("error", "/horarios", "Ya existe un horario en ese rango de horas");
+    }
+
     const { data, error } = await supabase.from("horarios").insert([
         { dia_semana: nuevoHorarioData.dia, hora_inicio: nuevoHorarioData.hora_inicio, hora_fin: nuevoHorarioData.hora_fin },
     ]);
 
     if (error) {
-        return encodedRedirect("error", "/principal", error.message);
+        return encodedRedirect("error", "/horarios", error.message);
     }
 
-    return redirect("/horarios");
+    encodedRedirect("success","/horarios","Horario creado correctamente");
 }
 
 export const deleteHorarioAction = async (horarioId: number) => {
     const supabase = await createClient();
-    const { error } = await supabase.from("horarios").delete().match({ id: horarioId });
+    const { error } = await supabase.from("horarios")
+    .update({activo: false})
+    .match({ id: horarioId });
 
     if (error) {
         return encodedRedirect("error", "/horarios", error.message);

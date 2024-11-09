@@ -30,10 +30,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { differenceInMinutes,parse,isBefore, isAfter } from "date-fns";
 import { createHorarioAction } from "@/app/actions";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import TimePickerComponent from "@/components/TimePicker";
 
 const nuevoHorarioFormSchema = z.object({
     dia: z.string().max(10),
@@ -61,26 +61,22 @@ const nuevoHorarioFormSchema = z.object({
     message: "la clase debe ser en horario laboral.",
     path: ["hora_inicio"],
 })
+.refine(data => {
+    const end = parse(data.hora_fin, 'HH:mm', new Date());
+    return isBefore(end, parse("22:59", 'HH:mm', new Date()))
+    && isAfter(end, parse("06:59", 'HH:mm', new Date()))
+}, {
+    message: "la clase debe ser en horario laboral.",
+    path: ["hora_fin"],
+})
 
-function TimePickerComponent({ value, onChange }: { value: string, onChange: (value: string) => void }){
-    return (
-        <div className="relative">
-            <input
-                onChange={(e) => onChange(e.target.value)}
-                value={value}
-                required
-                type="time"
-                step="900"
-                className="bg-white border leading-none border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block min-w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-none" />
-        </div>
-    )
-}
 export function AgregarHorarioDialog() {
     const searchParams = useSearchParams();
     let succesMessage = searchParams.get("success");
     let errorMessage = searchParams.get("error");
     const params = new URLSearchParams(searchParams.toString())
     const { push } = useRouter();
+
     useEffect(() => {
         if(succesMessage) {
             toast.success(succesMessage)
@@ -88,21 +84,24 @@ export function AgregarHorarioDialog() {
         }
         if(errorMessage) {
             toast.error(errorMessage)
-            // borrar el error de la url
             params.delete("error")
         }
-    })
+        console.log("params")
+        push("/horarios")
+    },[succesMessage, errorMessage])
 
     const form = useForm<z.infer<typeof nuevoHorarioFormSchema>>({
         resolver: zodResolver(nuevoHorarioFormSchema),
         defaultValues: {
-            hora_inicio: "00:00",
-            hora_fin: "00:00",
+            hora_inicio: "07:00",
+            hora_fin: "09:00",
         },
     })
+
     function onSubmit(values: z.infer<typeof nuevoHorarioFormSchema>) {
         createHorarioAction(values)
     }
+
     return (
             <Dialog>
                 <DialogTrigger asChild>
@@ -176,7 +175,7 @@ export function AgregarHorarioDialog() {
                     </DialogFooter>
                 </form>
                 </Form>
-                </DialogContent>
+            </DialogContent>
         </Dialog>
     )
 }
