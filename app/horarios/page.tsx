@@ -17,9 +17,9 @@ async function getData(): Promise<typeof Horario[]> {
 export default async function Horarios() {
     const data = await getData()
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-4">
             <H2>Horarios</H2>
-            <div className="flex justify-end my-4" >
+            <div className="flex justify-end mt-4" >
                 <AgregarHorarioDialog />
             </div>
             <DataTable columns={columns} data={data} />

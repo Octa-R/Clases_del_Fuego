@@ -1,3 +1,4 @@
+import { H2 } from "@/components/typography/h2";
 import { Pago, columns } from "./columns"
 import { DataTable } from "./data-table"
 import { createClient } from '@/utils/supabase/server';
@@ -20,7 +21,8 @@ export default async function DemoPage() {
     const data = await getData()
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-4">
+            <H2>Pagos</H2>
             <DataTable columns={columns} data={data} />
         </div>
     )

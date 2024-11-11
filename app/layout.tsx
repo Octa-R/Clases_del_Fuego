@@ -32,6 +32,8 @@ export default function RootLayout({
                                         <Link href={"/horarios"}>Horarios</Link>
                                         <Link href={'/pagos'}>Pagos</Link>
                                         <Link href={'/alumnes'}>Alumnado</Link>
+                                        <Link href={'/inscribirse-horario'}>Inscribirse a un Horario</Link>
+                                        <Link href={'/recuperar-clase'}>Recuperar Clase</Link>
                                     </div>
                                     <HeaderAuth />
                                 </div>

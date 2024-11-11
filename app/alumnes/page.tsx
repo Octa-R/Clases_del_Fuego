@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import { Alumno, columns } from './columns';
+import { columns } from './columns';
 import { DataTable } from './data-table';
+import { H2 } from '@/components/typography/h2';
 
 async function getData(): Promise< any[]> {
     const supabase = await createClient();
@@ -20,7 +21,8 @@ export default async function Horarios() {
     const data = await getData()
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-4">
+            <H2>Alumnado</H2>
             <DataTable columns={columns} data={data} />
         </div>
     )
