@@ -13,7 +13,7 @@ import {
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useToastMessages } from "@/hooks/useToastMessages"
+import { useToastMessages } from "@/components/hooks/useToastMessages"
 import { es } from "date-fns/locale"
 import { HorariosDisponibles } from "../inscribirse-horario/HorariosDisponibles"
 

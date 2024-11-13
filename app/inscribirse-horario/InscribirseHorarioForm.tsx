@@ -16,7 +16,7 @@ import { inscribirseHorarioAction } from "../actions"
 import { Alumno, CodigoDias } from "../types"
 import { SeleccionadorDeDia } from "./SeleccionadorDeDia"
 import { HorariosDisponibles } from "./HorariosDisponibles"
-import { useToastMessages } from "@/hooks/useToastMessages"
+import { useToastMessages } from "@/components/hooks/useToastMessages"
 
 const formSchema = z.object({
     dia: z.string().min(1),

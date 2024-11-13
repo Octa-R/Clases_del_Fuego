@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod"
 import { createHorarioAction } from "@/app/actions";
 import { HorarioForm, HorarioSchema } from "./HorarioForm";
-import { useToastMessages } from "@/hooks/useToastMessages";
+import { useToastMessages } from "@/components/hooks/useToastMessages";
 
 export function AgregarHorarioDialog() {
     useToastMessages()
