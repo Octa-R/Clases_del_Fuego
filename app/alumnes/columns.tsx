@@ -4,8 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Link, MoreHorizontal, Pencil, PencilIcon, Router, TrashIcon, X } from "lucide-react"
-import { use } from "react";
+import { PencilIcon,  TrashIcon } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { Alumno } from "../types";
 
@@ -18,7 +17,6 @@ export const AlumnoSchema = z.object({
     observaciones: z.string(),
     inscripciones: z.array(z.object({ }))
 });
-
 
 export const columns: ColumnDef<Alumno>[] = [
     {

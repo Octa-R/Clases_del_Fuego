@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server"
 import { DataTable } from "./data-table"
 import { columns } from "./columns"
-import { Alumno } from "../columns"
 import { ProfileForm } from "@/components/ProfileForm"
 import { H2 } from "@/components/typography/h2"
 const getData = async (idUser: string) => {
