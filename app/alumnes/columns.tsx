@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Link, MoreHorizontal, Pencil, PencilIcon, Router, TrashIcon, X } from "lucide-react"
 import { use } from "react";
 import { useRouter } from "next/navigation";
+import { Alumno } from "../types";
 
-export const Alumno = z.object({
+export const AlumnoSchema = z.object({
     id: z.number(),
     nombre: z.string(),
     apellido: z.string(),
@@ -18,7 +19,8 @@ export const Alumno = z.object({
     inscripciones: z.array(z.object({ }))
 });
 
-export const columns: ColumnDef<typeof Alumno>[] = [
+
+export const columns: ColumnDef<Alumno>[] = [
     {
         id: "select",
         header: ({ table }) => (

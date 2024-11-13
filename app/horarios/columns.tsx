@@ -1,12 +1,11 @@
 "use client"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react"
+import {  EyeIcon, PencilIcon, TrashIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { z } from "zod";
 import { useRouter } from "next/navigation"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
-import { toast } from "sonner"
 import { deleteHorarioAction } from "../actions"
 
 export const Horario = z.object({
@@ -68,6 +67,9 @@ export const columns: ColumnDef<typeof Horario>[] = [
             const router = useRouter()
             return (
                 <div className="flex gap-2">
+                    <Button onClick={() => router.push(`/horarios/${h.id}`)} variant="outline" size="icon">
+                        <EyeIcon />
+                    </Button>
                     <Button onClick={() => router.push(`/horarios/${h.id}`)} variant="outline" size="icon" color="green-600">
                         <PencilIcon />
                     </Button>

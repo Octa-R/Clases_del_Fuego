@@ -2,7 +2,7 @@ import { DataTable } from "../horarios/data-table";
 import { columns, Horario } from "./columns"
 import { createClient } from '@/utils/supabase/server';
 import { H2 } from "@/components/typography/h2";
-import { AgregarHorarioDialog } from "@/components/AgregarHorarioDialog";
+import { AgregarHorarioDialog } from "@/app/horarios/AgregarHorarioDialog";
 
 async function getData(): Promise<typeof Horario[]> {
     const supabase = await createClient();
